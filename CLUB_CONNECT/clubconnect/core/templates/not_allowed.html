@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="text-center mt-5">
+    <h2 class="text-danger">Access Restricted</h2>
+    <p class="text-danger">Only club admins are allowed to create posts.</p>
+    <a href="{% url 'home' %}" class="btn btn-dark mt-3">Go Back</a>
+</div>
+{% endblock %}

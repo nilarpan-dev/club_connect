@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="profile-header text-center">
+
+    {% if profile_user.profile_picture %}
+        <img src="{{ profile_user.profile_picture.url }}"
+             class="profile-avatar">
+    {% else %}
+        <img src="https://via.placeholder.com/150"
+             class="profile-avatar">
+    {% endif %}
+
+    <h3 class="mt-3">@{{ profile_user.username }}</h3>
+
+    <p class="text-muted">{{ profile_user.bio }}</p>
+
+    <div class="profile-stats mt-3">
+        <div>
+            <strong>{{ posts.count }}</strong>
+            <span>Posts</span>
+        </div>
+
+        <div>
+            <strong>{{ total_likes }}</strong>
+            <span>Total Likes</span>
+        </div>
+    </div>
+
+</div>
+
+<hr class="my-4">
+
+<div class="row g-3">
+    {% for post in posts %}
+        <div class="col-md-4">
+            <div class="post-grid-card">
+                <img src="{{ post.image.url }}" class="img-fluid">
+            </div>
+        </div>
+    {% empty %}
+        <p class="text-center text-muted">No posts yet.</p>
+    {% endfor %}
+</div>
+
+{% endblock %}

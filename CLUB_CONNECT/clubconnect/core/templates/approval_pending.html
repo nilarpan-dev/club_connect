@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center min-vh-100">
+    <div class="approval-card text-center">
+
+        <div class="pending-icon mb-4">
+            ⏳
+        </div>
+
+        <h2 class="mb-3">Approval Pending</h2>
+
+        <p class="text-muted">
+            Your request to become a Club Admin has been submitted.
+            An administrator needs to review and approve your account.
+        </p>
+
+        <p class="text-muted small">
+            You’ll be able to log in once your account is activated.
+        </p>
+
+        <a href="{% url 'login' %}" class="btn btn-dark mt-4 w-100">
+            Back to Login
+        </a>
+
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+   <div class="row">
+
+    <!-- LEFT SIDEBAR -->
+    <div class="col-lg-3 d-none d-lg-block">
+    <div class="sidebar-wrapper">
+
+        <div class="sidebar-card p-3 mb-4">
+            <h6>🔥 Trending Clubs</h6>
+            <ul class="list-unstyled">
+                {% for admin in club_admins %}
+                    <li class="mb-2">
+                        <a href="{% url 'profile' admin.username %}" 
+                           class="text-decoration-none text-dark">
+                            {{ admin.username }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="sidebar-card p-3">
+            <h6>⭐ Suggested Clubs</h6>
+            <ul class="list-unstyled">
+                {% for admin in club_admins|slice:":3" %}
+                    <li class="mb-2">
+                        {{ admin.username }}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    </div>
+
+
+    <!-- MAIN FEED -->
+    <div class="col-md-8 col-lg-6">
+
+        {% if request.user.is_club_admin %}
+        <a href="{% url 'create_post' %}" class="btn btn-success mb-4 w-100">
+            Create Post
+        </a>
+        {% endif %}
+
+        {% for post in posts %}
+        <div class="card mb-3 shadow-sm post-card animate__animated animate__fadeInUp">
+
+            <div class="card-header">
+                <a href="{% url 'profile' post.user.username %}" class="text-dark text-decoration-none">
+                    <strong>
+                        {{ post.user.username }}
+                        {% if post.user.is_club_admin %}
+                        <span class="badge bg-success">Club Admin</span>
+                        {% endif %}
+                    </strong>
+                </a>
+            </div>
+
+            <img src="{{ post.image.url }}" class="card-img-top post-image">
+
+            <div class="card-body">
+                <p>{{ post.caption }}</p>
+
+                <a href="/like/{{post.id}}" class="btn btn-outline-primary btn-sm like-btn">
+                    ❤️ {{ post.likes.count }}
+                </a>
+
+                <hr>
+
+                <h6>Comments</h6>
+
+                {% for comment in post.comments.all %}
+                <p><strong>{{comment.user.username}}</strong>: {{comment.text}}</p>
+                {% endfor %}
+
+                <form method="POST" action="{% url 'add_comment' post.id %}">
+                    {% csrf_token %}
+                    <input name="text" class="form-control form-control-sm" placeholder="Add comment">
+                    <button class="btn btn-dark btn-sm mt-2">Comment</button>
+                </form>
+
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+
+
+    <!-- RIGHT SIDEBAR -->
+    <div class="col-lg-3 d-none d-lg-block">
+        <div class="sidebar-card p-3 mb-4">
+            <h6>📢 Announcements</h6>
+            <p class="small text-muted">
+                Welcome to ClubConnect! Stay updated with campus activities.
+            </p>
+        </div>
+
+        <div class="sidebar-card p-3">
+            <h6>📊 Platform Stats</h6>
+            <p class="mb-1">👥 Clubs: {{ total_admins }}</p>
+            <p class="mb-1">📝 Posts: {{ total_posts }}</p>
+            <p>❤️ Likes: {{ total_likes }}</p>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
