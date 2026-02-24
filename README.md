@@ -88,7 +88,7 @@ clubconnect/
 └── db.sqlite3
 ⚙️ Installation & Setup
 1. Clone the Repository
-git clone https://github.com/yourusername/club-connect.git
+git clone https://github.com/nilarpan-dev/club_connect.git
 cd club-connect
 2. Create Virtual Environment
 python -m venv venv
